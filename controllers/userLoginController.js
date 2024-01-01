@@ -30,11 +30,12 @@ exports.getUserHandler = async (req, res) => {
 				process.env.SECRET_KEY,
 				{ expiresIn: '1h' }
 			);
-			res.cookie('token', token, { httpOnly: true });
+
+			res.cookie('token', token);
 			res.send({
 				message: 'log in success',
 				userData: { username: object.username },
-				result: 0,
+				result: 1,
 			});
 		}
 	}

@@ -1,13 +1,21 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
-exports.cookieJwtAuth = (req, res, next) => {
-	const { token } = req.cookies;
+exports.cookieJwtAuth = (req, res) => {
+	const token = req.body.authentication;
+	console.log(token);
+	console.log(token);
 	try {
 		const user = jwt.verify(token, process.env.SECRET_KEY);
-		req.userdata = user;
-		next();
+		res.send({
+			result: true,
+			username: user.username,
+		});
 	} catch (err) {
 		res.clearCookie('token');
+		res.send({
+			result: false,
+			username: '',
+		});
 	}
 };
